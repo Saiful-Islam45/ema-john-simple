@@ -4,8 +4,11 @@ import fakeData from '../../fakeData';
 import ReviewItems from '../ReviewItems/ReviewItems';
 import Cart from '../Cart/Cart';
 import happyImage from '../../images/giphy.gif';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../User-auth';
 
 const Review = () => {
+    const auth = useAuth();
     const [cart, setCart] = useState([]);
     const [orderPlaced, setOrderPlaced] = useState(false);
 
@@ -53,17 +56,25 @@ const Review = () => {
                         {
                             thankYou
                         }
+                        {
+                            !cart.length && <h4 style={{ color: 'red' }}>Ooops,Still you have nothing to proceed!!!!<a href="/shop">Buy Now</a></h4>
+                        }
                     </div>
                     <div className="col-md-3">
                         <Cart cart={cart}>
-                            <button onClick={handlePlacedOrder} className="main-button">Place Order</button>
+                            <Link to="shipment">
+                                {
+                                    auth.user ?
+                                        <button className="main-button">Proceed Checkout </button> : <button className="main-button">Login to Proceed</button>
+                                }
+                            </Link>
                         </Cart>
                     </div>
                 </div>
             </div>
 
 
-        </div>
+        </div >
     );
 };
 

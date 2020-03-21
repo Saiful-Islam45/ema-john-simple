@@ -1,10 +1,10 @@
 import React from 'react';
 
-
 //import { faAddressCard } from '@fortawesome/free-solid-svg-icons';
 
 const Cart = (props) => {
     const cart = props.cart;
+
     const total = cart.reduce((total, prd) => total + prd.price * prd.quantity, 0)
     let shipping = 0;
     if (total > 35) {
@@ -34,8 +34,9 @@ const Cart = (props) => {
             {
                 props.children
             }
+
         </div>
     );
 };
 
-export default Cart;
+export default Cart; 
