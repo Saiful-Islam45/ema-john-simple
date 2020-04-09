@@ -4,7 +4,7 @@ import './Shipment.css';
 import { useAuth } from '../User-auth';
 
 const Shipment = () => {
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm();
     const onSubmit = data => { console.log(data) }
     const auth = useAuth();
     return (
