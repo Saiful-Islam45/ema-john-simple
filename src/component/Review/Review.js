@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabaseCart, removeFromDatabaseCart, processOrder } from '../../utilities/databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart} from '../../utilities/databaseManager';
 import ReviewItems from '../ReviewItems/ReviewItems';
 import Cart from '../Cart/Cart';
-import happyImage from '../../images/giphy.gif';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../User-auth';
 
 const Review = () => {
     const auth = useAuth();
     const [cart, setCart] = useState([]);
-    const [orderPlaced, setOrderPlaced] = useState(false);
-
-    const handlePlacedOrder = () => {
-        setCart([]);
-        setOrderPlaced(true);
-        processOrder();
-
-    }
+    //const [orderPlaced, setOrderPlaced] = useState(false);
 
     const removeProduct = (productKey) => {
         console.log("remove clicked", productKey);
@@ -28,7 +20,7 @@ const Review = () => {
     useEffect(() => {
         const saveCart = getDatabaseCart();
         const productKeys = Object.keys(saveCart);
-        fetch('http://localhost:3000/getProductsByKey',{
+        fetch('https://agile-beach-69705.herokuapp.com/getProductsByKey',{
             method:'POST',
             headers:{
                 'Content-type':'application/json'
@@ -46,10 +38,6 @@ const Review = () => {
         })
 
     }, []);
-    let thankYou;
-    if (orderPlaced) {
-        thankYou = <img src={happyImage} alt="" />;
-    }
     return (
         <div>
             <div className="container-fluid">
@@ -61,9 +49,6 @@ const Review = () => {
                                 product={pd}
                                 removeProduct={removeProduct}
                             ></ReviewItems>)
-                        }
-                        {
-                            thankYou
                         }
                         {
                             !cart.length && <h4 style={{ color: 'red' }}>Ooops,Still you have nothing to proceed!!!!<a href="/shop">Buy Now</a></h4>
@@ -81,8 +66,6 @@ const Review = () => {
                     </div>
                 </div>
             </div>
-
-
         </div >
     );
 };
